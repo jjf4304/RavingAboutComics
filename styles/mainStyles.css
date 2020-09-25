@@ -1,0 +1,15 @@
+html, body{
+    height: 100%;
+    width: 100%;
+    background-color: black; 
+    background-image: linear-gradient(rgba(0,128,128,.50) 10%,rgba(0,128,128,0) 20%, rgba(0,128,128,0) 70%, rgba(0,128,128,.50) 100%);
+}
+
+#topBar{
+    color: orange;
+    margin: 10px;
+}
+
+#login{
+    float: right;
+} 
