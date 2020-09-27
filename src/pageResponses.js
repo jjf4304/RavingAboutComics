@@ -19,13 +19,13 @@ const getMainStyle = (request, response) => respond(request, response, 200, main
 
 // Respond to a request for a page that doesn't exist with a JSON response object.
 const notFound = (request, response) => {
-    const responseJSON = {
-      id: 'notFound',
-      message: 'The page requested was not found.',
-    };
-  
-    return respond(request, response, 404);
+  const responseJSON = {
+    id: 'notFound',
+    message: 'The page requested was not found.',
   };
+
+  return respond(request, response, 404);
+};
 
 module.exports = {
   getIndex,

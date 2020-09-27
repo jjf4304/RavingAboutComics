@@ -16,12 +16,12 @@ const urlStruct = {
 };
 
 const handleGET = (request, response, parsedUrl) => {
-    if (urlStruct[request.method][parsedUrl.pathname]) {
-      urlStruct[request.method][parsedUrl.pathname](request, response);
-    } else {
-      urlStruct[request.method].notFound(request, response);
-    }
-  };
+  if (urlStruct[request.method][parsedUrl.pathname]) {
+    urlStruct[request.method][parsedUrl.pathname](request, response);
+  } else {
+    urlStruct[request.method].notFound(request, response);
+  }
+};
 
 const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
@@ -34,7 +34,6 @@ const onRequest = (request, response) => {
 
   else handlePOST(request, response, parsedUrl);
 };
-
 
 http.createServer(onRequest).listen(port);
 

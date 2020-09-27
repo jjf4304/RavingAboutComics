@@ -1,11 +1,7 @@
 {
   "name": "ravingaboutcomics",
   "version": "1.0.0",
-  "description": "IGME 430 Project 1",
-  "engines": {
-    "node": "12.16.3",
-    "npm": "6.14.4"
-  },
+  "description": "Project 1 for IGME 430",
   "main": "./src/server.js",
   "scripts": {
     "start": "node ./src/server.js",
