@@ -10,6 +10,8 @@ section for title and large score*/
 
     box-shadow: 10px 10px rgba(0, 0, 0, .50);
 }
+/* sourced and slightly modified from this question
+ https://stackoverflow.com/questions/46090760/controlling-the-size-of-an-image-within-a-css-grid-layout */
 
 .imageContainer > img{
     width: 200px;;
