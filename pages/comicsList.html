@@ -16,7 +16,7 @@
             const response = JSON.parse(xhr.response);
             console.log(response);
 
-            const top3 = response.data.top3;
+            const list = response.data.top3;
 
             const hotlist = document.querySelector('#hotList');
 
@@ -49,19 +49,6 @@
 
 
             
-        };
-
-        const getFrontPageData = () =>{
-            const xhr = new XMLHttpRequest();
-
-            const url = '/getComics?type=front'
-            xhr.open('GET', url);
-            xhr.setRequestHeader('Accept', 'application/json');
-
-            xhr.onload = () => handleGETRequest(xhr);
-            xhr.send();
-
-            return false;
         };
 
         const init = () =>{
@@ -97,18 +84,7 @@
     
         </div>
         <div class="contentBody">
-            <div class = "bodyTitle">
-                <h2>The Hottest Books</h2>
-            </div>
-            <div id="hotList" class="frontComicGrid">
 
-            </div>
-            <div class = "bodyTitle">
-                <h2>Recent Reviews</h2>
-            </div>
-            <div id="recentReviews" class="frontComicGrid">
-
-            </div>
     
         </div id=contentBody>
     </div>

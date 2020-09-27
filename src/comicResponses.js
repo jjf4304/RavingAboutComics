@@ -138,7 +138,7 @@ const getFrontPageData = () => {
         const json = {};
         json.title = comics[i].title;
         json.imgURL = comics[i].imgURL;
-        json.topScore = comics[i].topScore;
+        json.totalScore = comics[i].totalScore;
         top3[json.title] = json;
         numAdded++;
       }
