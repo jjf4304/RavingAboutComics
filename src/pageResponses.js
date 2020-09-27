@@ -24,7 +24,8 @@ const notFound = (request, response) => {
     message: 'The page requested was not found.',
   };
 
-  return respond(request, response, 404);
+  // Change this to send a html page for 404 not found files.
+  return respond(request, response, 404, responseJSON, 'application/json');
 };
 
 module.exports = {

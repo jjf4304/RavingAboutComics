@@ -26,6 +26,7 @@ html, body{
 
 #sideNavBar a{
     height: 5%;
+    text-align: center;
     width: auto;
     display: block;
     color: orange;

@@ -9,6 +9,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script type="text/babel">
 
+        const handleGETRequest = (xhr)=>{
+
+            const response = JSON.parse(xhr.response);
+            console.log(response);
+        };
+
+        const getFrontPageData = () =>{
+            const xhr = new XMLHttpRequest();
+
+            const url = '/getComics?type=front'
+            xhr.open('GET', url);
+            xhr.setRequestHeader('Accept', 'application/json');
+
+            xhr.onload = () => handleGETRequest(xhr);
+            xhr.send();
+
+            return false;
+        };
+
+        const init = () =>{
+            getFrontPageData();
+        };
+
+        window.onload = init;
+
     </script>
 </head>
 <header>
@@ -33,11 +58,11 @@
         </div>
 
     </section>
-    <main>
+    <div ic="contentBody">
         <div id="hotList"></div>
         <div id="recentReviews"></div>
 
-    </main>
+    </div id=contentBody>
 
     
 </body>

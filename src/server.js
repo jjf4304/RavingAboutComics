@@ -11,13 +11,17 @@ const urlStruct = {
     '/': pageResponses.getIndex,
     '/index.html': pageResponses.getIndex,
     '/mainStyle.css': pageResponses.getMainStyle,
+    '/getComics': comicResponses.getComicData,
     notFound: pageResponses.notFound,
   },
 };
 
 const handleGET = (request, response, parsedUrl) => {
+  const params = query.parse(parsedUrl.query);
+  console.dir(params);
+
   if (urlStruct[request.method][parsedUrl.pathname]) {
-    urlStruct[request.method][parsedUrl.pathname](request, response);
+    urlStruct[request.method][parsedUrl.pathname](request, response, params);
   } else {
     urlStruct[request.method].notFound(request, response);
   }
@@ -32,7 +36,7 @@ const onRequest = (request, response) => {
   // Else handle with POST request to addUser
   if (request.method === 'GET' || request.method === 'HEAD') handleGET(request, response, parsedUrl);
 
-  else handlePOST(request, response, parsedUrl);
+  // else handlePOST(request, response, parsedUrl);
 };
 
 http.createServer(onRequest).listen(port);
