@@ -3,7 +3,7 @@ const fs = require('fs');
 // the client.html file
 const index = fs.readFileSync(`${__dirname}/../pages/index.html`);
 
-const pageNotFound = fs.readFileSync(`${__dirname}/../pages/notFound.html`);
+//const pageNotFound = fs.readFileSync(`${__dirname}/../pages/notFound.html`);
 
 const comicListPage = fs.readFileSync(`${__dirname}/../pages/notFound.html`);
 

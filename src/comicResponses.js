@@ -101,14 +101,14 @@ const respondJSON = (request, response, status, json) => {
   response.end();
 };
 
-const respondMeta = (request, response, status) => {
-  const headers = {
-    'Content-Type': 'application/json',
-  };
+// const respondMeta = (request, response, status) => {
+//   const headers = {
+//     'Content-Type': 'application/json',
+//   };
 
-  response.writeHead(status, headers);
-  response.end();
-};
+//   response.writeHead(status, headers);
+//   response.end();
+// };
 
 const generateError = (id, message) => {
   const errorJson = {};
@@ -146,7 +146,7 @@ const getFrontPageData = () => {
     }
   }
 
-  const recentReviews = {};
+  //const recentReviews = {};
   // to be implemented
 
   const json = {};
@@ -214,9 +214,9 @@ const getComicData = (request, response, params) => {
   return respondJSON(request, response, 400, errorJson);
 };
 
-const addComic = (request, response, comicToAdd) => {
+// const addComic = (request, response, comicToAdd) => {
 
-};
+// };
 
 module.exports = {
   getComicData,
