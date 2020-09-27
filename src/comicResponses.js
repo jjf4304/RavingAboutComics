@@ -86,6 +86,30 @@ const getFrontPageData = () =>{
     return json;
 };
 
+const getComic = (titleToGet) =>{
+    const json = {};
+    for(i = 0; i < comics.length; i++){
+        if(comics[i].title === titleToGet){
+            json = comics[i];
+        }
+    }
+
+    return json;
+};
+
+const getAllComics = () =>{
+    const json = {};
+
+    for(i = 0; i < comics.length; i++){
+        json[comics[i].title] = {};
+        json[comics[i].title].title = comics[i].title;
+        json[comics[i].title].imgURL = comics[i].imgURL;
+        json[comics[i].title].topScore = comics[i].topScore;
+    }
+
+    return json;
+};
+
 const getComicData = (request, response, params) =>{
     if(!params.getType){
         const json = generateError("badRequest", "Error: Invalid parameter for what type of retrieval.");
@@ -95,7 +119,34 @@ const getComicData = (request, response, params) =>{
     const comicData = {};
 
     switch(params.type){
-
+        case 'front':
+            comicData = getFrontPageData();
+            return respondJSON(request, response, '200', comicData);
+            break;
+        case 'single':
+            if(!params.title){
+                const errorJson = generateError('badRequest', "Error: Missing title parameter of comic to retrieve.");
+                return respondJSON(request, response, '400', errorJson);
+            }
+            comicData = getComic(params.title);
+            if(!comicData.title){
+                const errorJson = generateError('notFound', "Error: Comic not found.");
+                return respondJSON(request, response, '404', errorJson);
+            }
+            return respondJSON(request, response, '200', comicData);
+            break;
+        case 'list':
+            comicData = getAllComics();
+            return respondJSON(request, response, '200', comicData);
+            break;
+        default:
+            const errorJson = generateError('badRequest', "Error: Bad request type parameter.");
+            return respondJSON(request, response, '400', errorJson);
+            break;
     }
+
+};
+
+const addComic = (request, response, comicToAdd) =>{
 
 };
