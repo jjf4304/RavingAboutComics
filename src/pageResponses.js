@@ -2,8 +2,10 @@ const fs = require('fs');
 
 // the client.html file
 const index = fs.readFileSync(`${__dirname}/../pages/index.html`);
-// the style.css file
+// the style.css files
 const mainStyle = fs.readFileSync(`${__dirname}/../styles/mainStyles.css`);
+
+const frontPageStyle = fs.readFileSync(`${__dirname}/../styles/frontpageStyles.css`);
 
 const respond = (request, response, status, content, contentType) => {
   response.writeHead(status, { 'Content-Type': contentType });
@@ -16,6 +18,8 @@ const getIndex = (request, response) => respond(request, response, 200, index, '
 
 // Serve the style.css page
 const getMainStyle = (request, response) => respond(request, response, 200, mainStyle, 'text/css');
+
+const getFrontPageStyle = (request, response) => respond(request, response, 200, frontPageStyle, 'text/css');
 
 // Respond to a request for a page that doesn't exist with a JSON response object.
 const notFound = (request, response) => {
@@ -31,5 +35,6 @@ const notFound = (request, response) => {
 module.exports = {
   getIndex,
   getMainStyle,
+  getFrontPageStyle,
   notFound,
 };

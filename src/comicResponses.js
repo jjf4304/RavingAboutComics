@@ -16,7 +16,6 @@ Structure:
                 -Review Time
 */
 
-
 // ALL IMAGES ARE THE PROPERTY OF THE PUBLISHERS AND THE ARTISTS
 const comics = [
   {
@@ -26,70 +25,70 @@ const comics = [
     totalScore: 9,
     imgURL: 'https://cdn.imagecomics.com/assets/i/releases/19368/empty-zone-1_faf3cdff1a.jpg',
     reviews: [
-        {
-            score: 9,
-            written: "",
-            reviewTime: '',
-            //user tbi
-        }
+      {
+        score: 9,
+        written: '',
+        reviewTime: '',
+        // user tbi
+      },
     ],
   },
   {
-      title: 'The Crow',
-      author: 'James O\'barr',
-      publisher: 'Caliber Comics',
-      totalScore: 10,
-      imgURL: 'https://upload.wikimedia.org/wikipedia/en/8/85/The_Crow1_Cover.jpg',
-      reviews: [
-          {
-                score: 10,
-                written: "",
-                reviewTime: '',
-          }
-      ],
+    title: 'The Crow',
+    author: 'James O\'barr',
+    publisher: 'Caliber Comics',
+    totalScore: 10,
+    imgURL: 'https://upload.wikimedia.org/wikipedia/en/8/85/The_Crow1_Cover.jpg',
+    reviews: [
+      {
+        score: 10,
+        written: '',
+        reviewTime: '',
+      },
+    ],
   },
   {
-        title: 'Carnage, U.S.A',
-        author: 'Zeb Wells',
-        publisher: 'Marvel Comics',
-        totalScore: 8,
-        imgURL: 'https://vignette.wikia.nocookie.net/marveldatabase/images/b/bd/Carnage%2C_U.S.A._Vol_1_1.jpg',
-        reviews: [
-            {
-                score: 8,
-                written: "",
-                reviewTime: '',
-            }
-        ],
-    },
-    {
-        title: 'All Star Batman & Robin',
-        author: 'Frank Miller',
-        publisher: 'DC Comics',
-        totalScore: 4,
-        imgURL: 'https://upload.wikimedia.org/wikipedia/en/b/ba/Allstarbatmanandrobin01.jpg',
-        reviews: [
-            {
-                score: 4,
-                written: "",
-                reviewTime: '',
-            }
-        ],
-    }, 
-    {
-        title: 'Red Lanterns Vol. 4: Blood Brothers',
-        author: 'Charles Soule',
-        publisher: 'DC Comics',
-        totalScore: 7,
-        imgURL: 'https://www.dccomics.com/sites/default/files/styles/covers192x291/public/gn-covers/2018/05/redlanterns_vol4_bloodbros_5b045b12a93552.91300624.jpg',
-        reviews: [
-            {
-                score: 7,
-                written: "",
-                reviewTime: '',
-            }
-        ],
-    }, 
+    title: 'Carnage, U.S.A',
+    author: 'Zeb Wells',
+    publisher: 'Marvel Comics',
+    totalScore: 8,
+    imgURL: 'https://vignette.wikia.nocookie.net/marveldatabase/images/b/bd/Carnage%2C_U.S.A._Vol_1_1.jpg',
+    reviews: [
+      {
+        score: 8,
+        written: '',
+        reviewTime: '',
+      },
+    ],
+  },
+  {
+    title: 'All Star Batman & Robin',
+    author: 'Frank Miller',
+    publisher: 'DC Comics',
+    totalScore: 4,
+    imgURL: 'https://upload.wikimedia.org/wikipedia/en/b/ba/Allstarbatmanandrobin01.jpg',
+    reviews: [
+      {
+        score: 4,
+        written: '',
+        reviewTime: '',
+      },
+    ],
+  },
+  {
+    title: 'Red Lanterns Vol. 4: Blood Brothers',
+    author: 'Charles Soule',
+    publisher: 'DC Comics',
+    totalScore: 7,
+    imgURL: 'https://www.dccomics.com/sites/default/files/styles/covers192x291/public/gn-covers/2018/05/redlanterns_vol4_bloodbros_5b045b12a93552.91300624.jpg',
+    reviews: [
+      {
+        score: 7,
+        written: '',
+        reviewTime: '',
+      },
+    ],
+  },
 ];
 
 const respondJSON = (request, response, status, json) => {
@@ -131,8 +130,7 @@ const getFrontPageData = () => {
       top3[json.title] = json;
     }
   } else {
-
-    //Change this to sorting the comics by top score and then getting top 3
+    // Change this to sorting the comics by top score and then getting top 3
     let i = 0;
     let numAdded = 0;
     while (i < comics.length && numAdded < 3) {
@@ -184,36 +182,36 @@ const getAllComics = () => {
 };
 
 const getComicData = (request, response, params) => {
-    if (!params.type) {
-        const json = generateError('badRequest', 'Error: Invalid parameter for what type of retrieval.');
-        return respondJSON(request, response, 400, json);
-    }
+  if (!params.type) {
+    const json = generateError('badRequest', 'Error: Invalid parameter for what type of retrieval.');
+    return respondJSON(request, response, 400, json);
+  }
 
-    const comicData = {};
+  const comicData = {};
 
-    if (params.type === 'front') {
-            comicData.data = getFrontPageData();
-            return respondJSON(request, response, 200, comicData);
+  if (params.type === 'front') {
+    comicData.data = getFrontPageData();
+    return respondJSON(request, response, 200, comicData);
+  }
+  if (params.type === 'single') {
+    if (!params.title) {
+      const errorJson = generateError('badRequest', 'Error: Missing title parameter of comic to retrieve.');
+      return respondJSON(request, response, 400, errorJson);
     }
-    if (params.type === 'single') {
-            if (!params.title) {
-                const errorJson = generateError('badRequest', 'Error: Missing title parameter of comic to retrieve.');
-                return respondJSON(request, response, 400, errorJson);
-            }
-            comicData.data = getComic(params.title);
-            if (!comicData.title) {
-                const errorJson = generateError('notFound', 'Error: Comic not found.');
-                return respondJSON(request, response, 404, errorJson);
-            }
-            return respondJSON(request, response, 200, comicData);
+    comicData.data = getComic(params.title);
+    if (!comicData.title) {
+      const errorJson = generateError('notFound', 'Error: Comic not found.');
+      return respondJSON(request, response, 404, errorJson);
     }
-    if (params.type === 'list') {
-            comicData.data = getAllComics();
-            return respondJSON(request, response, 200, comicData);
-    }
+    return respondJSON(request, response, 200, comicData);
+  }
+  if (params.type === 'list') {
+    comicData.data = getAllComics();
+    return respondJSON(request, response, 200, comicData);
+  }
 
-    const errorJson = generateError('badRequest', 'Error: Bad request type parameter.');
-    return respondJSON(request, response, 400, errorJson);
+  const errorJson = generateError('badRequest', 'Error: Bad request type parameter.');
+  return respondJSON(request, response, 400, errorJson);
 };
 
 const addComic = (request, response, comicToAdd) => {

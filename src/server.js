@@ -10,7 +10,8 @@ const urlStruct = {
   GET: {
     '/': pageResponses.getIndex,
     '/index.html': pageResponses.getIndex,
-    '/mainStyle.css': pageResponses.getMainStyle,
+    '/mainStyles.css': pageResponses.getMainStyle,
+    '/frontpageStyles.css' : pageResponses.getFrontPageStyle,
     '/getComics': comicResponses.getComicData,
     notFound: pageResponses.notFound,
   },
