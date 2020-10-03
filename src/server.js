@@ -11,6 +11,7 @@ const urlStruct = {
     '/': pageResponses.getIndex,
     '/index.html': pageResponses.getIndex,
     '/comicsList.html': pageResponses.getComicsList,
+    'comic.html': pageResponses.getComic,
     '/mainStyles.css': pageResponses.getMainStyle,
     '/frontpageStyles.css': pageResponses.getFrontPageStyle,
     '/smallComicCardStyle.css': pageResponses.getComicCardStyle,

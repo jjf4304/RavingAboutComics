@@ -5,7 +5,7 @@ Structure:
         -Title
         -Author
         -Publisher
-        -Total Score (not sent through POST when creating new comic)
+        -Total Score (not sent through POST when creating new comic, but when adding review it gets set)
         -Cover Image URL (optional)
         -Reviews, an object
             Structure:
@@ -13,7 +13,6 @@ Structure:
                 -User (Implement later)
                 -Score
                 -Written Review: (optional?)
-                -Review Time
 */
 
 // ALL IMAGES ARE THE PROPERTY OF THE PUBLISHERS AND THE ARTISTS
@@ -28,7 +27,6 @@ const comics = [
       {
         score: 9,
         written: '',
-        reviewTime: '',
         // user tbi
       },
     ],
@@ -43,7 +41,6 @@ const comics = [
       {
         score: 10,
         written: '',
-        reviewTime: '',
       },
     ],
   },
@@ -57,7 +54,6 @@ const comics = [
       {
         score: 8,
         written: '',
-        reviewTime: '',
       },
     ],
   },
@@ -71,7 +67,6 @@ const comics = [
       {
         score: 4,
         written: '',
-        reviewTime: '',
       },
     ],
   },
@@ -85,7 +80,6 @@ const comics = [
       {
         score: 7,
         written: '',
-        reviewTime: '',
       },
     ],
   },
@@ -184,6 +178,7 @@ const getFrontPageData = () => {
 };
 
 const getComic = (titleToGet) => {
+  //change this to a better search function?
   const json = {};
   for (let i = 0; i < comics.length; i++) {
     if (comics[i].title === titleToGet) {

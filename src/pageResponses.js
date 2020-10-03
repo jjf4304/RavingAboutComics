@@ -7,6 +7,8 @@ const index = fs.readFileSync(`${__dirname}/../pages/index.html`);
 
 const comicListPage = fs.readFileSync(`${__dirname}/../pages/comicsList.html`);
 
+const comicPage =  fs.readFileSync(`${__dirname}/../pages/comic.html`);
+
 // the style.css files
 const mainStyle = fs.readFileSync(`${__dirname}/../styles/mainStyles.css`);
 
@@ -26,6 +28,8 @@ const respond = (request, response, status, content, contentType) => {
 const getIndex = (request, response) => respond(request, response, 200, index, 'text/html');
 
 const getComicsList = (request, response) => respond(request, response, 200, comicListPage, 'text/html');
+
+const getComic = (request, response) => respond(request, response, 200, comicPage, 'text/html');
 
 // Serve the style.css page
 const getMainStyle = (request, response) => respond(request, response, 200, mainStyle, 'text/css');
@@ -50,6 +54,7 @@ const notFound = (request, response) => {
 module.exports = {
   getIndex,
   getComicsList,
+  getComic,
   getMainStyle,
   getFrontPageStyle,
   getComicCardStyle,
