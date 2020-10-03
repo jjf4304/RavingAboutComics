@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raving About Comics</title>
+    <title>Raving About Comics - Add Comic</title>
     <link rel="stylesheet" type="text/css" href="/mainStyles.css">
-    <link rel="stylesheet" type="text/css" href="/frontpageStyles.css">
-    <link rel="stylesheet" type="text/css" href="/smallComicCardStyle.css">
+    <link rel="stylesheet" type="text/css" href="/addComicStyles.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script type="text/babel">
@@ -46,16 +45,22 @@
     
         </div>
         <div class="contentBody">
-            <!--Add Form here
-            
-            Inputs for:
-            Title
-            Author
-            publisher
-            Image url (Optional?)
-            -->
+
+            <h2>Add in the New Comic Info Below!</h2>
+            <form id="addComic" action="/addComic" method="POST">
+                <label for="title">Comic Title: </label>
+                <input id="titleField" type="text" name="title" required>
+                <label for="author">Comic Author: </label>
+                <input id="authorField" type="text" name="author"required>
+                <label for="publisher">Comic Publisher: </label>
+                <input id="publisherField" type="text" name="publisher" required>
+                <label for="cover" title="This is an optional parameter.">Cover Image URL: </label>
+                <input id="coverField" type="text" name="cover">
+                <input type="submit" id="submitcomic" value="Add Comic">
+            </form>
+
     
-        </div id=contentBody>
+        </div>
     </div>
 
     

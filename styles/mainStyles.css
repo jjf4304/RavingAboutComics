@@ -6,7 +6,7 @@ html, body{
     overflow-x: hidden;
 }
 h1, h2, h3, h4, h5, h6{
-    color: rgb(255, 165, 0);
+    color: orange;
 }
 
 #topBar{
@@ -18,6 +18,10 @@ h1, h2, h3, h4, h5, h6{
 #login{
     float: right;
 } 
+
+.centeredText{
+    text-align: center;
+}
 
 #sideNavBar{
     border-right-style: solid;

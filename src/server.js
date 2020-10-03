@@ -6,16 +6,19 @@ const comicResponses = require('./comicResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
+//Remember to add HEAD requests for ALL of these
 const urlStruct = {
   GET: {
     '/': pageResponses.getIndex,
     '/index.html': pageResponses.getIndex,
     '/comicsList.html': pageResponses.getComicsList,
-    'comic.html': pageResponses.getComic,
+    '/comic.html': pageResponses.getComic,
+    '/addComic.html': pageResponses.getAddComic,
     '/mainStyles.css': pageResponses.getMainStyle,
     '/frontpageStyles.css': pageResponses.getFrontPageStyle,
     '/smallComicCardStyle.css': pageResponses.getComicCardStyle,
     '/comicListStyles.css': pageResponses.getComicListStyles,
+    '/addComicStyles.css': pageResponses.getAddComicStyles,
     '/getComics': comicResponses.getComicData,
     notFound: pageResponses.notFound,
   },
