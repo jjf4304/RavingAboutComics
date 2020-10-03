@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raving About Comics</title>
     <link rel="stylesheet" type="text/css" href="/mainStyles.css">
-    <link rel="stylesheet" type="text/css" href="/frontpageStyles.css">
+    <link rel="stylesheet" type="text/css" href="/comicListStyles.css">
     <link rel="stylesheet" type="text/css" href="/smallComicCardStyle.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
@@ -16,12 +16,12 @@
             const response = JSON.parse(xhr.response);
             console.log(response);
 
-            const list = response.data.top3;
+            const list = response.data;
 
-            const hotlist = document.querySelector('#hotList');
+            const comicList = document.querySelector('#comicList');
 
-            for(const comic in top3){
-                console.log(top3[comic]);
+            for(const comic in list){
+                console.log(list[comic]);
 
                 const comicImg = document.createElement('img');
                 const comicTitle = document.createElement('h3');
@@ -30,10 +30,10 @@
                 const imageContainer = document.createElement('div');
                 imageContainer.setAttribute('class', 'imageContainer');
 
-                comicImg.src = top3[comic].imgURL;
-                comicImg.alt = top3[comic].title;
-                comicTitle.textContent = top3[comic].title;
-                comicScore.textContent = top3[comic].totalScore;
+                comicImg.src = list[comic].imgURL;
+                comicImg.alt = list[comic].title;
+                comicTitle.textContent = list[comic].title;
+                comicScore.textContent = list[comic].totalScore;
 
                 imageContainer.appendChild(comicImg);
 
@@ -44,15 +44,32 @@
                 comicDiv.appendChild(comicTitle);
                 comicDiv.appendChild(comicScore);
 
-                hotlist.appendChild(comicDiv);
+                comicDiv.addEventListener('click', () =>{
+                    location.href = `/comic.html?title=${list[comic].title}`;
+                })
+
+                comicList.appendChild(comicDiv);
             }
 
 
             
         };
 
+        const getComicList = () =>{
+            const xhr = new XMLHttpRequest();
+
+            const url = '/getComics?type=list'
+            xhr.open('GET', url);
+            xhr.setRequestHeader('Accept', 'application/json');
+
+            xhr.onload = () => handleGETRequest(xhr);
+            xhr.send();
+
+            return false;
+        };
+
         const init = () =>{
-            getFrontPageData();
+            getComicList();
         };
 
         window.onload = init;
@@ -73,10 +90,10 @@
 <body>
     <div id="mainBodyContent">
         <div id="sideNavBar">
-            <a href="/index.html">Home</a><hr>
-            <a href="/index.html">Comics List</a>
-            <a href="/index.html">Reading List</a><hr>
-            <a href="/index.html">My Reviews</a><hr>
+            <a href="/index.html">Home</a>
+            <a href="/comicsList.html">Comics List</a>
+            <a href="/index.html">Reading List</a>
+            <a href="/index.html">My Reviews</a>
     
             <div id="copyright">
                 <p>&copy;Joshua Fredrickson 2020</p>
@@ -84,6 +101,12 @@
     
         </div>
         <div class="contentBody">
+
+            <h2>All Comics!</h2>
+            <h3> Don't see the comic you're looking for? <a href="" id="addComic">Click here to add one!</a></h3>
+            <div id="comicList">
+
+            </div>
 
     
         </div id=contentBody>

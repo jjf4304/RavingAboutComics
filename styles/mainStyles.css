@@ -22,6 +22,7 @@ h1, h2, h3, h4, h5, h6{
 #sideNavBar{
     border-right-style: solid;
     border-color: ghostwhite;
+    height: 100%;
 }
 
 #sideNavBar a{
@@ -32,6 +33,9 @@ h1, h2, h3, h4, h5, h6{
     color: orange;
     font-size: 1em;
     font-weight: bold;
+    border-bottom-style: solid;
+    border-color: ghostwhite;
+    padding: 10px;
 }
 
 #copyright{

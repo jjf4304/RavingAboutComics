@@ -14,6 +14,7 @@ const urlStruct = {
     '/mainStyles.css': pageResponses.getMainStyle,
     '/frontpageStyles.css': pageResponses.getFrontPageStyle,
     '/smallComicCardStyle.css': pageResponses.getComicCardStyle,
+    '/comicListStyles.css': pageResponses.getComicListStyles,
     '/getComics': comicResponses.getComicData,
     notFound: pageResponses.notFound,
   },

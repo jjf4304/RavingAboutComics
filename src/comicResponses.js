@@ -119,14 +119,27 @@ const generateError = (id, message) => {
   return errorJson;
 };
 
+const compareByTotalScoreScore = (a, b) => {
+
+  if(a.topScore > b.topScore){
+
+  }
+};
+
 const getFrontPageData = () => {
+
+  const array = [];
+
+  for(let i = 0; i < comics.length; i++){
+    array[i] = comics[i];
+  }
   const top3 = {};
   if (comics.length <= 3) {
     for (let i = 0; i < comics.length; i++) {
       const json = {};
       json.title = comics[i].title;
       json.imgURL = comics[i].imgURL;
-      json.topScore = comics[i].topScore;
+      json.totalScore = comics[i].totalScore;
       top3[json.title] = json;
     }
   } else {
@@ -146,12 +159,26 @@ const getFrontPageData = () => {
     }
   }
 
-  //const recentReviews = {};
+  //Get the 3 most recently reviewed.
+  const recentReviews = {};
+  if (comics.length <= 3) {
+    for (let i = 0; i < comics.length; i++) {
+      const json = {};
+      json.title = comics[i].title;
+      json.imgURL = comics[i].imgURL;
+      json.totalScore = comics[i].totalScore;
+      recentReviews[json.title] = json;
+    }
+  } else{
+
+  }
+
+  // const recentReviews = {};
   // to be implemented
 
   const json = {};
   json.top3 = top3;
-  // json.recentReviews = recentReviews;
+  json.recentReviews = recentReviews;
 
   return json;
 };
@@ -169,16 +196,17 @@ const getComic = (titleToGet) => {
 };
 
 const getAllComics = () => {
-  const json = {};
+  const list = {};
 
   for (let i = 0; i < comics.length; i++) {
-    json[comics[i].title] = {};
-    json[comics[i].title].title = comics[i].title;
-    json[comics[i].title].imgURL = comics[i].imgURL;
-    json[comics[i].title].topScore = comics[i].topScore;
+      const json = {};
+      json.title = comics[i].title;
+      json.imgURL = comics[i].imgURL;
+      json.totalScore = comics[i].totalScore;
+      list[json.title] = json;
   }
 
-  return json;
+  return list;
 };
 
 const getComicData = (request, response, params) => {

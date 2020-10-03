@@ -44,11 +44,19 @@
                 comicDiv.appendChild(comicTitle);
                 comicDiv.appendChild(comicScore);
 
+                comicDiv.onclick = (e) =>{
+
+                }
+
                 hotlist.appendChild(comicDiv);
             }
 
 
             
+        };
+
+        const goToComic = (title) =>{
+
         };
 
         const getFrontPageData = () =>{
@@ -87,10 +95,10 @@
     <div id="mainBodyContent">
         <div id="sideNavBar">
             <!--Change the HR and <a> to be just a div block (with on click) andgit co border bottom-->
-            <a href="/index.html">Home</a><hr>
-            <a href="/index.html">Comics List</a><hr>
-            <a href="/index.html">Reading List</a><hr>
-            <a href="/index.html">My Reviews</a><hr>
+            <a href="/index.html">Home</a>
+            <a href="/comicsList.html">Comics List</a>
+            <a href="/index.html">Reading List</a>
+            <a href="/index.html">My Reviews</a>
     
             <div id="copyright">
                 <p>&copy;Joshua Fredrickson 2020</p>

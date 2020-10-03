@@ -3,9 +3,9 @@ const fs = require('fs');
 // the client.html file
 const index = fs.readFileSync(`${__dirname}/../pages/index.html`);
 
-//const pageNotFound = fs.readFileSync(`${__dirname}/../pages/notFound.html`);
+// const pageNotFound = fs.readFileSync(`${__dirname}/../pages/notFound.html`);
 
-const comicListPage = fs.readFileSync(`${__dirname}/../pages/notFound.html`);
+const comicListPage = fs.readFileSync(`${__dirname}/../pages/comicsList.html`);
 
 // the style.css files
 const mainStyle = fs.readFileSync(`${__dirname}/../styles/mainStyles.css`);
@@ -13,6 +13,8 @@ const mainStyle = fs.readFileSync(`${__dirname}/../styles/mainStyles.css`);
 const frontPageStyle = fs.readFileSync(`${__dirname}/../styles/frontpageStyles.css`);
 
 const comicCardStyle = fs.readFileSync(`${__dirname}/../styles/smallComicCardStyle.css`);
+
+const comicListStyles = fs.readFileSync(`${__dirname}/../styles/comicListStyles.css`);
 
 const respond = (request, response, status, content, contentType) => {
   response.writeHead(status, { 'Content-Type': contentType });
@@ -32,6 +34,8 @@ const getFrontPageStyle = (request, response) => respond(request, response, 200,
 
 const getComicCardStyle = (request, response) => respond(request, response, 200, comicCardStyle, 'text/css');
 
+const getComicListStyles = (request, response) => respond(request, response, 200, comicListStyles, 'text/css');
+
 // Respond to a request for a page that doesn't exist with a JSON response object.
 const notFound = (request, response) => {
   const responseJSON = {
@@ -49,5 +53,6 @@ module.exports = {
   getMainStyle,
   getFrontPageStyle,
   getComicCardStyle,
+  getComicListStyles,
   notFound,
 };
