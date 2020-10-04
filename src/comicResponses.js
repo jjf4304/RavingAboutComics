@@ -1,3 +1,5 @@
+// Author: Joshua Fredrickson
+
 /* comics array of comic objects
 Structure:
     top Level: "NameOfComic"
@@ -5,97 +7,97 @@ Structure:
         -Title
         -Author
         -Publisher
-        -Total Score (not sent through POST when creating new comic, but when adding review it gets
-          set)
+        -Total Score (set to 0 for a no review comic, else gets changed when adding reviews)
         -Cover Image URL (optional)
-        -Reviews, an object
-            Structure:
-            Indexed by ID?
+        -Reviews, an array of objects
+            Structure for a review object:
                 -User (Implement later)
                 -Score
-                -Written Review: (optional?)
+                -Written Review: (optional)
 */
 
+// My hard coded starting data for the API
 // ALL IMAGES ARE THE PROPERTY OF THE PUBLISHERS AND THE ARTISTS
 const comics = {
   'Empty Zone': {
-      title: 'Empty Zone',
-      author: 'Jason Shawn Alexander',
-      publisher: 'Image Comics',
-      totalScore: 9.5,
-      imgURL: 'https://cdn.imagecomics.com/assets/i/releases/19368/empty-zone-1_faf3cdff1a.jpg',
-      lastReviewed: Date.now(),
-      reviews: [
-        {
-          score: 9,
-          written: '',
-          // user tbi
-        },
-        {
-          score: 10,
-          written: 'An amazing blend of interesting worlds, strange and broken characters, and wierd happenings.',
-          // user tbi
-        },
-      ],
-    },
-  'The Crow':{
-        title: 'The Crow',
-        author: 'James O\'Barr',
-        publisher: 'Caliber Comics',
-        totalScore: 10,
-        imgURL: 'https://upload.wikimedia.org/wikipedia/en/8/85/The_Crow1_Cover.jpg',
-        lastReviewed: Date.now(),
-        reviews: [
-          {
-            score: 10,
-            written: '',
-          },
-        ],
+    title: 'Empty Zone',
+    author: 'Jason Shawn Alexander',
+    publisher: 'Image Comics',
+    totalScore: 9.5,
+    imgURL: 'https://cdn.imagecomics.com/assets/i/releases/19368/empty-zone-1_faf3cdff1a.jpg',
+    lastReviewed: Date.now(),
+    reviews: [
+      {
+        score: 9,
+        written: '',
+        // user tbi
       },
-  'Carnage, U.S.A.' : {
-        title: 'Carnage, U.S.A.',
-        author: 'Zeb Wells',
-        publisher: 'Marvel Comics',
-        totalScore: 8,
-        imgURL: 'https://vignette.wikia.nocookie.net/marveldatabase/images/b/bd/Carnage%2C_U.S.A._Vol_1_1.jpg',
-        lastReviewed: Date.now(),
-        reviews: [
-          {
-            score: 8,
-            written: '',
-          },
-        ],
+      {
+        score: 10,
+        written: 'An amazing blend of interesting worlds, strange and broken characters, and wierd happenings.',
+        // user tbi
       },
-  'All Star Batman & Robin': {
-        title: 'All Star Batman & Robin',
-        author: 'Frank Miller',
-        publisher: 'DC Comics',
-        totalScore: 4,
-        imgURL: 'https://upload.wikimedia.org/wikipedia/en/b/ba/Allstarbatmanandrobin01.jpg',
-        lastReviewed: Date.now(),
-        reviews: [
-          {
-            score: 4,
-            written: '',
-          },
-        ],
+    ],
+  },
+  'The Crow': {
+    title: 'The Crow',
+    author: 'James O\'Barr',
+    publisher: 'Caliber Comics',
+    totalScore: 10,
+    imgURL: 'https://upload.wikimedia.org/wikipedia/en/8/85/The_Crow1_Cover.jpg',
+    lastReviewed: Date.now(),
+    reviews: [
+      {
+        score: 10,
+        written: '',
       },
+    ],
+  },
+  'Carnage, U.S.A.': {
+    title: 'Carnage, U.S.A.',
+    author: 'Zeb Wells',
+    publisher: 'Marvel Comics',
+    totalScore: 8,
+    imgURL: 'https://vignette.wikia.nocookie.net/marveldatabase/images/b/bd/Carnage%2C_U.S.A._Vol_1_1.jpg',
+    lastReviewed: Date.now(),
+    reviews: [
+      {
+        score: 8,
+        written: '',
+      },
+    ],
+  },
+  'All Star Batman And Robin': {
+    title: 'All Star Batman And Robin',
+    author: 'Frank Miller',
+    publisher: 'DC Comics',
+    totalScore: 4,
+    imgURL: 'https://upload.wikimedia.org/wikipedia/en/b/ba/Allstarbatmanandrobin01.jpg',
+    lastReviewed: Date.now(),
+    reviews: [
+      {
+        score: 4,
+        written: '',
+      },
+    ],
+  },
   'Red Lanterns Vol. 4: Blood Brothers': {
-        title: 'Red Lanterns Vol. 4: Blood Brothers',
-        author: 'Charles Soule',
-        publisher: 'DC Comics',
-        totalScore: 7,
-        imgURL: 'https://www.dccomics.com/sites/default/files/styles/covers192x291/public/gn-covers/2018/05/redlanterns_vol4_bloodbros_5b045b12a93552.91300624.jpg',
-        lastReviewed: Date.now(),
-        reviews: [
-          {
-            score: 7,
-            written: 'If you like the change to Red Lanterns as more characters than rage villains, you will find a lot to like here. Gives a lot of character to the individual Red Lanterns, but some may find that it feels forced at points to give them empathetic backstories.',
-          },
-        ],
+    title: 'Red Lanterns Vol. 4: Blood Brothers',
+    author: 'Charles Soule',
+    publisher: 'DC Comics',
+    totalScore: 7,
+    imgURL: 'https://www.dccomics.com/sites/default/files/styles/covers192x291/public/gn-covers/2018/05/redlanterns_vol4_bloodbros_5b045b12a93552.91300624.jpg',
+    lastReviewed: Date.now(),
+    reviews: [
+      {
+        score: 7,
+        written: 'If you like the change to Red Lanterns as more characters than rage villains, you will find a lot to like here. Gives a lot of character to the individual Red Lanterns, but some may find that it feels forced at points to give them empathetic backstories.',
       },
+    ],
+  },
 };
 
+// Function to respond with a json object alongside the status code
 const respondJSON = (request, response, status, json) => {
   const headers = {
     'Content-Type': 'application/json',
@@ -106,6 +108,7 @@ const respondJSON = (request, response, status, json) => {
   response.end();
 };
 
+// Function to respond with just a status code.
 const respondMeta = (request, response, status) => {
   const headers = {
     'Content-Type': 'application/json',
@@ -115,6 +118,7 @@ const respondMeta = (request, response, status) => {
   response.end();
 };
 
+// Helper function to generate an error object
 const generateError = (id, message) => {
   const errorJson = {};
 
@@ -124,61 +128,61 @@ const generateError = (id, message) => {
   return errorJson;
 };
 
-//Sorts the array of comics from highest score to lowest score.
-// ref: https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/ 
+// Sorts the array of comics from highest score to lowest score.
+// ref: https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
 const descendingTotalScore = (a, b) => {
-  if (a.totalScore > b.totalScore) 
-    return -1;
-  if( a.totalScore < b.totalScore)
-    return 1;
+  if (a.totalScore > b.totalScore) { return -1; }
+  if (a.totalScore < b.totalScore) return 1;
 
   return 0;
 };
 
-const descendingReviewDate =(a, b) =>{
-  if (a.lastReviewed > b.lastReviewed) 
-  return -1;
-if( a.lastReviewed < b.lastReviewed)
-  return 1;
+// Sorts an array of comics from most recently reviewed to last reviewed/
+// ref: https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
+const descendingReviewDate = (a, b) => {
+  if (a.lastReviewed > b.lastReviewed) return -1;
+  if (a.lastReviewed < b.lastReviewed) return 1;
 
-return 0;
-} 
+  return 0;
+};
 
-//TO FINISH
-const getFrontPageData = () => {
+// Helper function when adding a review to re-calculate the total score for that comic.
+const calculateScore = (titleToUpdate) => {
+  let total = 0;
+  const numReviews = comics[titleToUpdate].reviews.length;
 
-  const list = [];
-
-  for(const comic in comics){
-    list.push(comics[comic]);
+  for (let i = 0; i < numReviews; i++) {
+    total += comics[titleToUpdate].reviews[i].score;
   }
 
+  comics[titleToUpdate].totalScore = (total / numReviews);
+};
 
+// Function used to get the top 3 highest scored comics as well as get the three most recent
+// reviewed comics.  Returns a object that contains this data.
+const getFrontPageData = () => {
+  const list = [];
 
+  const listOfKeys = Object.keys(comics);
+  for (let i = 0; i < listOfKeys.length; i++) {
+    list.push(comics[listOfKeys[i]]);
+  }
+
+  // get the top 3 highest scored comics
   const top3 = {};
   if (list.length <= 3) {
     for (let i = 0; i < list.length; i++) {
-      // const json = {};
-      // json.title = comics[i].title;
-      // json.imgURL = comics[i].imgURL;
-      // json.totalScore = comics[i].totalScore;
       top3[list[i].title] = list[i];
     }
   } else {
-    // Change this to sorting the comics by top score and then getting top 3
     let numAdded = 0;
     list.sort(descendingTotalScore);
-    
+
     for (let i = 0; i < 3; i++) {
-        // const json = {};
-        // json.title = comics[i].title;
-        // json.imgURL = comics[i].imgURL;
-        // json.totalScore = comics[i].totalScore;
-        top3[list[i].title] = list[i];
-        numAdded++;
-        
-      if(numAdded >= 3)
-        break;
+      top3[list[i].title] = list[i];
+      numAdded++;
+
+      if (numAdded >= 3) break;
     }
   }
 
@@ -189,21 +193,16 @@ const getFrontPageData = () => {
       recentReviews[list[i].title] = list[i];
     }
   } else {
-    // Change this to sorting the comics by top score and then getting top 3
     let numAdded = 0;
     list.sort(descendingReviewDate);
-    
+
     for (let i = 0; i < 3; i++) {
-        recentReviews[list[i].title] = list[i];
-        numAdded++;
-        
-      if(numAdded >= 3)
-        break;
+      recentReviews[list[i].title] = list[i];
+      numAdded++;
+
+      if (numAdded >= 3) break;
     }
   }
-
-  // const recentReviews = {};
-  // to be implemented
 
   const json = {};
   json.top3 = top3;
@@ -212,10 +211,10 @@ const getFrontPageData = () => {
   return json;
 };
 
+// Returns the comic object indexed by it's title. If that comic doesn't
+// exist, return an empty object which will be error checked in getComicData
 const getComic = (titleToGet) => {
-  // change this to a better search function?
-
-  if(comics[titleToGet]){
+  if (comics[titleToGet]) {
     const json = comics[titleToGet];
     return json;
   }
@@ -224,25 +223,31 @@ const getComic = (titleToGet) => {
   return json;
 };
 
-
+// Returns a semi copy of the comic object to be returned to the client. Only
+// contains the data needed for a comic card in the client, Title, Score,
+// and Cover Image URL
 const getAllComics = () => {
   const list = {};
 
-  for(const comic in comics){
+  const listOfKeys = Object.keys(comics);
+  for (let i = 0; i < listOfKeys.length; i++) {
     const json = {};
-    json.title = comics[comic].title;
-    json.imgURL = comics[comic].imgURL;
-    json.totalScore = comics[comic].totalScore;
+    json.title = comics[listOfKeys[i]].title;
+    json.imgURL = comics[listOfKeys[i]].imgURL;
+    json.totalScore = comics[listOfKeys[i]].totalScore;
     list[json.title] = json;
   }
 
   return list;
 };
 
-
+// Function to handle incoming GET requests of the comics.
+// All GET response calls come from this function.
+// Calls relevent functions to provide it with the requested data.
+// Checks if parameters are valid/sent correctly, and if so completes the response.
 const getComicData = (request, response, params) => {
   if (!params.type) {
-    const json = generateError('badRequest', 'Error: Invalid parameter for what type of retrieval.');
+    const json = generateError('missingParameters', 'Error: Missing parameter for what type of retrieval.');
     return respondJSON(request, response, 400, json);
   }
 
@@ -254,7 +259,7 @@ const getComicData = (request, response, params) => {
   }
   if (params.type === 'single') {
     if (!params.title) {
-      const errorJson = generateError('badRequest', 'Error: Missing title parameter of comic to retrieve.');
+      const errorJson = generateError('missingParameters', 'Error: Missing title parameter of comic to retrieve.');
       return respondJSON(request, response, 400, errorJson);
     }
     comicData.data = getComic(params.title);
@@ -269,38 +274,27 @@ const getComicData = (request, response, params) => {
     return respondJSON(request, response, 200, comicData);
   }
 
-  const errorJson = generateError('badRequest', 'Error: Bad request type parameter.');
+  const errorJson = generateError('badRequest', 'Error: Bad Request.');
   return respondJSON(request, response, 400, errorJson);
 };
 
-const calculateScore = (titleToUpdate) =>{
-  let total = 0;
-  let numReviews = comics[titleToUpdate].reviews.length;
+// Function to add a review to a comic. Checks if the parameters are good, and if so
+// updates the reviews array for that comic, changes the total score to the new one,
+// and responds with a 204 for updating the comic.
+const addReview = (request, response, reviewToAdd) => {
+  if (!reviewToAdd.title || !reviewToAdd.score) {
+    const responseJSON = generateError('missingParameters', 'Title and Score are all needed parameters.');
 
-  for(let i = 0; i < numReviews; i++){
-    total+=comics[titleToUpdate].reviews[i].score;
-  }
-
-  comics[titleToUpdate].totalScore = (total/numReviews);
-
-};
-
-const addReview = (request, response, reviewToAdd) =>{
-  const responseJSON = {
-    message: 'Title and Score are all needed parameters.',
-  };
-
-  if(!reviewToAdd.title || !reviewToAdd.score){
-    responseJSON.id = 'missingParameters';
     return respondJSON(request, response, 400, responseJSON);
   }
 
+  const score = parseInt(reviewToAdd.score, 10);
   const review = {
-    score: parseInt(reviewToAdd.score),
+    score,
     written: '',
   };
 
-  if(reviewToAdd.written){
+  if (reviewToAdd.written) {
     review.written = reviewToAdd.written;
   }
 
@@ -310,30 +304,30 @@ const addReview = (request, response, reviewToAdd) =>{
   comics[reviewToAdd.title].lastReviewed = Date.now();
 
   return respondMeta(request, response, 204);
-
 };
 
-
+// Function to add a comic to the listing. Checks if the parameters are correct, and if so
+// proceeds. If the comic exists, update it with the sent in author, publisher, and img url data
+// then respond with a 204. Else create a new comic object into the listing and fill it with
+// the incoming data. Then respond with a 201 cide,
 const addComic = (request, response, comicToAdd) => {
-
   const responseJSON = {
     message: 'Title, Author, Publisher and a URL for the cover are all needed parameters.',
   };
 
-  if(!comicToAdd.title || !comicToAdd.author || !comicToAdd.publisher || !comicToAdd.imgURL){
+  if (!comicToAdd.title || !comicToAdd.author || !comicToAdd.publisher || !comicToAdd.imgURL) {
     responseJSON.id = 'missingParameters';
     return respondJSON(request, response, 400, responseJSON);
-  };
+  }
 
   let statusCode = 201;
 
-  if(comics[comicToAdd.title]){
+  if (comics[comicToAdd.title]) {
     statusCode = 204;
     comics[comicToAdd.title].author = comicToAdd.author;
     comics[comicToAdd.title].publisher = comicToAdd.publisher;
     comics[comicToAdd.title].imgURL = comicToAdd.imgURL;
-  }
-  else{
+  } else {
     comics[comicToAdd.title] = {};
     comics[comicToAdd.title].title = comicToAdd.title;
     comics[comicToAdd.title].author = comicToAdd.author;
@@ -344,14 +338,10 @@ const addComic = (request, response, comicToAdd) => {
     comics[comicToAdd.title].reviews = [];
   }
 
-  // if(statusCode === 201){
-  //   responseJSON.message = 'Successfully Created New Comic Entry.';
-  //   return respondJSON(request, response, statusCode, responseJSON);
-  // }
-
   return respondMeta(request, response, statusCode);
 };
 
+// Exports
 module.exports = {
   getComicData,
   addComic,

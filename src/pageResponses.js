@@ -48,7 +48,6 @@ const getComicListStyles = (request, response) => respond(request, response, 200
 
 const getComicPageStyles = (request, response) => respond(request, response, 200, comicPageStyles, 'text/css');
 
-
 // Respond to a request for a page that doesn't exist with a JSON response object.
 const notFound = (request, response) => respond(request, response, 404, notFoundPage, 'text/html');
 module.exports = {

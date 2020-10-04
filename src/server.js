@@ -7,6 +7,7 @@ const comicResponses = require('./comicResponses.js');
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 // Remember to add HEAD requests for ALL of these
+// Struct for all the different calls and incoming requests
 const urlStruct = {
   GET: {
     '/': pageResponses.getIndex,
@@ -19,7 +20,6 @@ const urlStruct = {
     '/smallComicCardStyle.css': pageResponses.getComicCardStyle,
     '/comicPageStyles.css': pageResponses.getComicPageStyles,
     '/comicListStyles.css': pageResponses.getComicListStyles,
-    '/addComicStyles.css': pageResponses.getAddComicStyles,
     '/getComics': comicResponses.getComicData,
     notFound: pageResponses.notFound,
   },
@@ -28,13 +28,15 @@ const urlStruct = {
   },
   POST: {
     '/addComic': comicResponses.addComic,
-    '/addReview' : comicResponses.addReview, 
+    '/addReview': comicResponses.addReview,
   },
 };
 
+// Function to handle a get or head request (pretty much GET)
+// If the pathname exists, call that function and pass it the
+// needed parameters if required. Else, respond with notFound page.
 const handleGET = (request, response, parsedUrl) => {
   const params = query.parse(parsedUrl.query);
-  console.dir(params);
 
   if (urlStruct[request.method][parsedUrl.pathname]) {
     urlStruct[request.method][parsedUrl.pathname](request, response, params);
@@ -43,8 +45,11 @@ const handleGET = (request, response, parsedUrl) => {
   }
 };
 
-const handlePOST = (request, response, parsedUrl) =>{
-  if(urlStruct['POST'][parsedUrl.pathname]){
+// Function to handle POST requests to the server. If the url exists, start to
+// chunk the incoming data for the parameters, then call the related function
+// to POST data into the API.
+const handlePOST = (request, response, parsedUrl) => {
+  if (urlStruct.POST[parsedUrl.pathname]) {
     const body = [];
 
     request.on('error', (err) => {
@@ -61,16 +66,15 @@ const handlePOST = (request, response, parsedUrl) =>{
       const bodyString = Buffer.concat(body).toString();
       const params = query.parse(bodyString);
 
-      urlStruct['POST'][parsedUrl.pathname](request, response, params);
+      urlStruct.POST[parsedUrl.pathname](request, response, params);
     });
   }
-
 };
 
+// Function to hanbdle incoming requests. It hands them off to handleGet or
+// handlePOST depending on the request method.
 const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
-  console.dir(parsedUrl.pathname);
-  console.dir(request.method);
 
   // If the request was a GET or HEAD request, handle it from URL struct
   // Else handle with POST request to addComic/Review

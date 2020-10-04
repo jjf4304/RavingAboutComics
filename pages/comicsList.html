@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raving About Comics</title>
+    <title>Raving About Comics - All Comics</title>
     <link rel="stylesheet" type="text/css" href="/mainStyles.css">
     <link rel="stylesheet" type="text/css" href="/comicListStyles.css">
     <link rel="stylesheet" type="text/css" href="/smallComicCardStyle.css">
@@ -11,6 +11,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script type="text/babel">
 
+        //Function to handle the response of a GET request for list of comic data. 
+        //For each comic in the system, create the DOM elements for a card for it
+        // from it's cover image, title and score and display it in the comic list div.
         const handleGETRequest = (xhr)=>{
 
             const response = JSON.parse(xhr.response);
@@ -21,8 +24,6 @@
             const comicList = document.querySelector('#comicList');
 
             for(const comic in list){
-                console.log(list[comic]);
-
                 const comicImg = document.createElement('img');
                 const comicTitle = document.createElement('h3');
                 const comicScore = document.createElement('h3');
@@ -33,7 +34,7 @@
                 comicImg.src = list[comic].imgURL;
                 comicImg.alt = list[comic].title;
                 comicTitle.textContent = list[comic].title;
-                comicScore.textContent = list[comic].totalScore;
+                comicScore.textContent = `Score: ${list[comic].totalScore}`;
 
                 imageContainer.appendChild(comicImg);
 
@@ -51,10 +52,9 @@
                 comicList.appendChild(comicDiv);
             }
 
-
-            
         };
 
+        //Function to send a GET AJAX request for the list of comics
         const getComicList = () =>{
             const xhr = new XMLHttpRequest();
 
@@ -68,11 +68,14 @@
             return false;
         };
 
+        //Init function fot the page. Calls getComicList and sets up the topBar 
+        //to relocate to the index on click
         const init = () =>{
             getComicList();
 
             const topBar = document.querySelector('#topBar');
             topBar.onclick = (e) =>{
+                //https://www.w3schools.com/jsref/prop_loc_href.asp 
                 location.href = '/index.html';
             };
         };
@@ -97,8 +100,7 @@
         <div id="sideNavBar">
             <a href="/index.html">Home</a>
             <a href="/comicsList.html">Comics List</a>
-            <a href="/index.html">Reading List</a>
-            <a href="/index.html">My Reviews</a>
+            <a href="/addComic.html">Add A Comic!</a>
     
             <div id="copyright">
                 <p>&copy;Joshua Fredrickson 2020</p>

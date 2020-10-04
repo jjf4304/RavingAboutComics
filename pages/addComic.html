@@ -38,6 +38,8 @@
             const comicPublisher = document.querySelector('#publisherField').value;
             const comicImg = document.querySelector('#coverField').value;
 
+            comicTitle.replace('&', 'And');
+
             const xhr = new XMLHttpRequest();
 
             xhr.open('POST', '/addComic');
@@ -62,6 +64,7 @@
             
             const topBar = document.querySelector('#topBar');
             topBar.onclick = (e) =>{
+                //https://www.w3schools.com/jsref/prop_loc_href.asp
                 location.href = '/index.html';
             };
 
@@ -89,8 +92,7 @@
             <!--Change the HR and <a> to be just a div block (with on click) andgit co border bottom-->
             <a href="/index.html">Home</a>
             <a href="/comicsList.html">Comics List</a>
-            <a href="/index.html">Reading List</a>
-            <a href="/index.html">My Reviews</a>
+            <a href="/addComic.html">Add A Comic!</a>
     
             <div id="copyright">
                 <p>&copy;Joshua Fredrickson 2020</p>
