@@ -17,8 +17,10 @@
             console.log(response);
 
             const top3 = response.data.top3;
+            const recentReviews = response.data.recentReviews;
 
             const hotlist = document.querySelector('#hotList');
+            const recentList = document.querySelector('#recentReviews');
 
             for(const comic in top3){
                 console.log(top3[comic]);
@@ -45,18 +47,47 @@
                 comicDiv.appendChild(comicScore);
 
                 comicDiv.onclick = (e) =>{
+                    //src https://www.w3schools.com/jsref/prop_loc_href.asp
                     location.href = `/comic.html?title=${top3[comic].title}`;
                 }
 
                 hotlist.appendChild(comicDiv);
             }
 
+            for(const comic in recentReviews){
+                console.log(recentReviews[comic]);
+
+                const comicImg = document.createElement('img');
+                const comicTitle = document.createElement('h3');
+                const comicScore = document.createElement('h3');
+
+                const imageContainer = document.createElement('div');
+                imageContainer.setAttribute('class', 'imageContainer');
+
+                comicImg.src = recentReviews[comic].imgURL;
+                comicImg.alt = recentReviews[comic].title;
+                comicTitle.textContent = recentReviews[comic].title;
+                comicScore.textContent = recentReviews[comic].totalScore;
+
+                imageContainer.appendChild(comicImg);
+
+                const comicDiv = document.createElement('div');
+                comicDiv.setAttribute('class', 'comicCardContainer');
+                
+                comicDiv.appendChild(imageContainer);
+                comicDiv.appendChild(comicTitle);
+                comicDiv.appendChild(comicScore);
+
+                comicDiv.onclick = (e) =>{
+                    //src https://www.w3schools.com/jsref/prop_loc_href.asp 
+                    location.href = `/comic.html?title=${recentReviews[comic].title}`;
+                }
+
+                recentList.appendChild(comicDiv);
+            }
+
             return;
             
-        };
-
-        const goToComic = (title) =>{
-
         };
 
         const getFrontPageData = () =>{

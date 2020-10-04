@@ -16,11 +16,12 @@
 
             const comic = JSON.parse(xhr.response);
 
-            const imgContainer = document.querySelector('#coverImageContainer')
-            const titleInfo = document.querySelector('#titleInfo')
-            const authorInfo = document.querySelector('#authorInfo')
-            const publisherInfo = document.querySelector('#publisherInfo')
-            const totalInfo = document.querySelector('#totalInfo')
+            const imgContainer = document.querySelector('#coverImageContainer');
+            imgContainer.innerHTML = '';
+            const titleInfo = document.querySelector('#titleInfo');
+            const authorInfo = document.querySelector('#authorInfo');
+            const publisherInfo = document.querySelector('#publisherInfo');
+            const totalInfo = document.querySelector('#totalInfo');
 
             const image = document.createElement('img');
             image.src = comic.imgURL;
@@ -34,6 +35,7 @@
             imgContainer.appendChild(image);
 
             const reviewContainter = document.querySelector('#reviewsBox');
+            reviewContainter.innerHTML = '';
 
             for(const review of comic.reviews){
                 const reviewBox = document.createElement('div');
@@ -64,12 +66,7 @@
             }
         };
 
-        const getData = () =>{
-            const queryString = window.location.search;
-
-            const params = new URLSearchParams(queryString);
-            
-            const title = params.get('title').replace("%20", " ");
+        const getData = (title) =>{
 
             const xhr = new XMLHttpRequest();
 
@@ -85,8 +82,42 @@
 
         };
 
+        const postReview = (e, reviewForm, title) =>{
+
+            e.preventDefault();
+
+            const reviewScore = document.querySelector('#scoreField').value;
+            const reviewWritten = document.querySelector('#writtenField').value;
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', '/addReview');
+            
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = () => getData(title);
+
+            const reviewParams = `title=${title}&score=${reviewScore}&written=${reviewWritten}`;
+            xhr.send(reviewParams);
+
+            return false;
+
+        };
+
         const init = () =>{
-            getData();
+
+            const queryString = window.location.search;
+            const params = new URLSearchParams(queryString);
+            const title = params.get('title').replace("%20", " ");
+
+            getData(title);
+
+            const reviewForm = document.querySelector('#addReview');
+
+            const addReview = (e) =>postReview(e, reviewForm, title);
+
+            reviewForm.addEventListener('submit', addReview);
 
             const topBar = document.querySelector('#topBar');
             topBar.onclick = (e) =>{
@@ -123,9 +154,6 @@
     
         </div>
         <div class="contentBody">
-            <!--Add Data here
-                
-            -->
 
             <div id="comicInfo">
 
@@ -152,6 +180,17 @@
 
             <div id="reviewsBox">
 
+            </div>
+
+            <div id="addReview">
+                <h2 class="centeredText">Write a Review!</h2>
+                <form id="addReview" action="/addReview" method="POST">
+                    <label for="score">Comic Rating: </label>
+                    <input id="scoreField" type="number" name="score" min='0' max='10' required>
+                    <label for="written">Review (Optional): </label>
+                    <textarea id="writtenField" name="written" rows="4" cols="80"></textarea>
+                    <input type="submit" id="submitReview" value="Add Review">>
+                </form>
             </div>
 
     

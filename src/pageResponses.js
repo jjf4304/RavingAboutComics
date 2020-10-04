@@ -22,8 +22,6 @@ const comicListStyles = fs.readFileSync(`${__dirname}/../styles/comicListStyles.
 
 const comicPageStyles = fs.readFileSync(`${__dirname}/../styles/comicPageStyles.css`);
 
-const addComicStyles = fs.readFileSync(`${__dirname}/../styles/addComicStyles.css`);
-
 const respond = (request, response, status, content, contentType) => {
   response.writeHead(status, { 'Content-Type': contentType });
   response.write(content);
@@ -50,7 +48,6 @@ const getComicListStyles = (request, response) => respond(request, response, 200
 
 const getComicPageStyles = (request, response) => respond(request, response, 200, comicPageStyles, 'text/css');
 
-const getAddComicStyles = (request, response) => respond(request, response, 200, addComicStyles, 'text/css');
 
 // Respond to a request for a page that doesn't exist with a JSON response object.
 const notFound = (request, response) => respond(request, response, 404, notFoundPage, 'text/html');
@@ -64,6 +61,5 @@ module.exports = {
   getComicCardStyle,
   getComicPageStyles,
   getComicListStyles,
-  getAddComicStyles,
   notFound,
 };

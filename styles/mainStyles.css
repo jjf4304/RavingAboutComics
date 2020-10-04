@@ -53,9 +53,46 @@ h1, h2, h3, h4, h5, h6{
 /* Grid referencing from the almighty w3schools.com*/
 #mainBodyContent{
     display: grid;
-    height: 90%; /*Change this later when the whole page is a grid*/
+    height: 100%; /*Change this later when the whole page is a grid*/
     grid-template-columns: 15% 75%;
     grid-template-rows: 90%;
     column-gap: 5%;
     padding: 5px;
+}
+
+label{
+    font-weight: bold;
+    color: orange;
+    padding: 10px;
+}
+
+input{
+    border-radius: 4px;
+}
+
+input[type=text], input[type=number]{
+    width: 100%;
+    padding: 15px 20px;
+    margin: 10px 0;
+}
+
+input[type=submit]{
+    text-align: center;
+    padding: 10px 2px;
+    width: 100px;
+}
+
+input[type=submit]:hover{
+    background-color: gray;
+    color: whitesmoke
+}
+
+input[type=submit]:active{
+    background-color: rgb(36, 36, 36);
+}
+
+textarea{
+    padding: 15px 20px;
+    margin: 10px 0;
+    width: 100%;
 }

@@ -28,7 +28,7 @@ const urlStruct = {
   },
   POST: {
     '/addComic': comicResponses.addComic,
-    // '/addReview' : comicResponses.addReview, 
+    '/addReview' : comicResponses.addReview, 
   },
 };
 
@@ -59,9 +59,9 @@ const handlePOST = (request, response, parsedUrl) =>{
 
     request.on('end', () => {
       const bodyString = Buffer.concat(body).toString();
-      const comicParams = query.parse(bodyString);
+      const params = query.parse(bodyString);
 
-      urlStruct['POST'][parsedUrl.pathname](request, response, comicParams);
+      urlStruct['POST'][parsedUrl.pathname](request, response, params);
     });
   }
 
