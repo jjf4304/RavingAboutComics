@@ -20,6 +20,8 @@ const comicCardStyle = fs.readFileSync(`${__dirname}/../styles/smallComicCardSty
 
 const comicListStyles = fs.readFileSync(`${__dirname}/../styles/comicListStyles.css`);
 
+const comicPageStyles = fs.readFileSync(`${__dirname}/../styles/comicPageStyles.css`);
+
 const addComicStyles = fs.readFileSync(`${__dirname}/../styles/addComicStyles.css`);
 
 const respond = (request, response, status, content, contentType) => {
@@ -46,6 +48,8 @@ const getComicCardStyle = (request, response) => respond(request, response, 200,
 
 const getComicListStyles = (request, response) => respond(request, response, 200, comicListStyles, 'text/css');
 
+const getComicPageStyles = (request, response) => respond(request, response, 200, comicPageStyles, 'text/css');
+
 const getAddComicStyles = (request, response) => respond(request, response, 200, addComicStyles, 'text/css');
 
 // Respond to a request for a page that doesn't exist with a JSON response object.
@@ -67,6 +71,7 @@ module.exports = {
   getMainStyle,
   getFrontPageStyle,
   getComicCardStyle,
+  getComicPageStyles,
   getComicListStyles,
   getAddComicStyles,
   notFound,

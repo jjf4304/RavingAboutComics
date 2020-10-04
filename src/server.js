@@ -17,6 +17,7 @@ const urlStruct = {
     '/mainStyles.css': pageResponses.getMainStyle,
     '/frontpageStyles.css': pageResponses.getFrontPageStyle,
     '/smallComicCardStyle.css': pageResponses.getComicCardStyle,
+    '/comicPageStyles.css': pageResponses.getComicPageStyles,
     '/comicListStyles.css': pageResponses.getComicListStyles,
     '/addComicStyles.css': pageResponses.getAddComicStyles,
     '/getComics': comicResponses.getComicData,
@@ -41,7 +42,7 @@ const onRequest = (request, response) => {
   console.dir(request.method);
 
   // If the request was a GET or HEAD request, handle it from URL struct
-  // Else handle with POST request to addUser
+  // Else handle with POST request to addComic/Review
   if (request.method === 'GET' || request.method === 'HEAD') handleGET(request, response, parsedUrl);
 
   // else handlePOST(request, response, parsedUrl);

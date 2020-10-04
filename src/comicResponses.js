@@ -179,14 +179,14 @@ const getFrontPageData = () => {
 
 const getComic = (titleToGet) => {
   //change this to a better search function?
-  const json = {};
   for (let i = 0; i < comics.length; i++) {
-    if (comics[i].title === titleToGet) {
-      json.comic = comics[i];
-      break;
+    if (comics[i].title == titleToGet) {
+      const json = comics[i];
+      return json;
     }
   }
 
+  const json = {};
   return json;
 };
 
@@ -222,11 +222,11 @@ const getComicData = (request, response, params) => {
       return respondJSON(request, response, 400, errorJson);
     }
     comicData.data = getComic(params.title);
-    if (!comicData.title) {
+    if (!comicData.data.title) {
       const errorJson = generateError('notFound', 'Error: Comic not found.');
       return respondJSON(request, response, 404, errorJson);
     }
-    return respondJSON(request, response, 200, comicData);
+    return respondJSON(request, response, 200, comicData.data);
   }
   if (params.type === 'list') {
     comicData.data = getAllComics();
