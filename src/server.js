@@ -6,7 +6,7 @@ const comicResponses = require('./comicResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-//Remember to add HEAD requests for ALL of these
+// Remember to add HEAD requests for ALL of these
 const urlStruct = {
   GET: {
     '/': pageResponses.getIndex,
@@ -23,6 +23,13 @@ const urlStruct = {
     '/getComics': comicResponses.getComicData,
     notFound: pageResponses.notFound,
   },
+  HEAD: {
+
+  },
+  POST: {
+    '/addComic': comicResponses.addComic,
+    // '/addReview' : comicResponses.addReview, 
+  },
 };
 
 const handleGET = (request, response, parsedUrl) => {
@@ -36,6 +43,30 @@ const handleGET = (request, response, parsedUrl) => {
   }
 };
 
+const handlePOST = (request, response, parsedUrl) =>{
+  if(urlStruct['POST'][parsedUrl.pathname]){
+    const body = [];
+
+    request.on('error', (err) => {
+      console.dir(err);
+      response.statusCode = 400;
+      response.end();
+    });
+
+    request.on('data', (chunk) => {
+      body.push(chunk);
+    });
+
+    request.on('end', () => {
+      const bodyString = Buffer.concat(body).toString();
+      const comicParams = query.parse(bodyString);
+
+      urlStruct['POST'][parsedUrl.pathname](request, response, comicParams);
+    });
+  }
+
+};
+
 const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
   console.dir(parsedUrl.pathname);
@@ -45,7 +76,7 @@ const onRequest = (request, response) => {
   // Else handle with POST request to addComic/Review
   if (request.method === 'GET' || request.method === 'HEAD') handleGET(request, response, parsedUrl);
 
-  // else handlePOST(request, response, parsedUrl);
+  else handlePOST(request, response, parsedUrl);
 };
 
 http.createServer(onRequest).listen(port);

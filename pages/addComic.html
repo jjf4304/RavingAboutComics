@@ -10,9 +10,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script type="text/babel">
 
+        const handleResponse = (xhr) =>{
+
+        };
+
+        const postComic = (e, comicForm) =>{
+
+
+
+            e.preventDefault();
+
+            const comicTitle = document.querySelector('#titleField').value;
+            const comicAuthor = document.querySelector('#authorField').value;
+            const comicPublisher = document.querySelector('#publisherField').value;
+            const comicImg = document.querySelector('#coverField').value;
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', '/addComic');
+
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = () => handleResponse(xhr);
+
+            const comicParams = `title=${comicTitle}&author=${comicAuthor}&publisher=${comicPublisher}&imgURL=${comicImg}`;
+
+            xhr.send(comicParams);
+            return false;
+        };
+
 
         const init = () =>{
             
+            const comicForm = document.querySelector('#addComic');
+            
+            const addComic = (e) => postComic(e, comicForm)
+            
+            const topBar = document.querySelector('#topBar');
+            topBar.onclick = (e) =>{
+                location.href = '/index.html';
+            };
+
+            comicForm.addEventListener('submit', addComic);
         };
 
         window.onload = init;

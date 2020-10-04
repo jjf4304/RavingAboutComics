@@ -5,7 +5,7 @@ const index = fs.readFileSync(`${__dirname}/../pages/index.html`);
 
 const comicListPage = fs.readFileSync(`${__dirname}/../pages/comicsList.html`);
 
-const comicPage =  fs.readFileSync(`${__dirname}/../pages/comic.html`);
+const comicPage = fs.readFileSync(`${__dirname}/../pages/comic.html`);
 
 const notFoundPage = fs.readFileSync(`${__dirname}/../pages/notFound.html`);
 
@@ -53,16 +53,7 @@ const getComicPageStyles = (request, response) => respond(request, response, 200
 const getAddComicStyles = (request, response) => respond(request, response, 200, addComicStyles, 'text/css');
 
 // Respond to a request for a page that doesn't exist with a JSON response object.
-const notFound = (request, response) => {
-  // const responseJSON = {
-  //   id: 'notFound',
-  //   message: 'The page requested was not found.',
-  // };
-
-  // Change this to send a html page for 404 not found files.
-  return respond(request, response, 404, notFoundPage, 'text/html');
-};
-
+const notFound = (request, response) => respond(request, response, 404, notFoundPage, 'text/html');
 module.exports = {
   getIndex,
   getComicsList,

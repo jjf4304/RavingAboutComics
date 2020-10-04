@@ -45,13 +45,13 @@
                 comicDiv.appendChild(comicScore);
 
                 comicDiv.onclick = (e) =>{
-
+                    location.href = `/comic.html?title=${top3[comic].title}`;
                 }
 
                 hotlist.appendChild(comicDiv);
             }
 
-
+            return;
             
         };
 
@@ -74,6 +74,11 @@
 
         const init = () =>{
             getFrontPageData();
+
+            const topBar = document.querySelector('#topBar');
+            topBar.onclick = (e) =>{
+                location.href = '/index.html';
+            };
         };
 
         window.onload = init;
