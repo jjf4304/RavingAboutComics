@@ -117,6 +117,7 @@
         //comic from the URL.
         const init = () =>{
 
+            //src = https://www.sitepoint.com/get-url-parameters-with-javascript/ 
             const queryString = window.location.search;
             const params = new URLSearchParams(queryString);
             const title = params.get('title').replace("%20", " ");
