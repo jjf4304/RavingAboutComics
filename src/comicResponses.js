@@ -246,6 +246,7 @@ const getAllComics = () => {
 // Calls relevent functions to provide it with the requested data.
 // Checks if parameters are valid/sent correctly, and if so completes the response.
 const getComicData = (request, response, params) => {
+  // No type parameter given for the request
   if (!params.type) {
     const json = generateError('missingParameters', 'Error: Missing parameter for what type of retrieval.');
     return respondJSON(request, response, 400, json);
@@ -253,29 +254,64 @@ const getComicData = (request, response, params) => {
 
   const comicData = {};
 
+  // Type of request for index.html data
   if (params.type === 'front') {
     comicData.data = getFrontPageData();
     return respondJSON(request, response, 200, comicData);
   }
+  // Type of request for comic.html data
   if (params.type === 'single') {
     if (!params.title) {
       const errorJson = generateError('missingParameters', 'Error: Missing title parameter of comic to retrieve.');
       return respondJSON(request, response, 400, errorJson);
     }
-    comicData.data = getComic(params.title);
-    if (!comicData.data.title) {
+    // If the comic wasn't found
+    if (!comics[params.title]) {
       const errorJson = generateError('notFound', 'Error: Comic not found.');
       return respondJSON(request, response, 404, errorJson);
     }
+    comicData.data = getComic(params.title);
     return respondJSON(request, response, 200, comicData.data);
   }
+
   if (params.type === 'list') {
     comicData.data = getAllComics();
     return respondJSON(request, response, 200, comicData);
   }
-
-  const errorJson = generateError('badRequest', 'Error: Bad Request.');
+  // type of request for comicsList.html
+  const errorJson = generateError('badRequest', 'Error: Bad Request. Type parameter invalid.');
   return respondJSON(request, response, 400, errorJson);
+};
+
+// Function for handling HEAD reqeusts for comic data. Depending on if the parameters
+// are correct respond 200, 400, or 404
+const getComicMetaData = (request, response, params) => {
+  // No type parameter given for the request
+  if (!params.type) {
+    return respondMeta(request, response, 400);
+  }
+  // Type of request for index.html data
+  if (params.type === 'front') {
+    return respondMeta(request, response, 200);
+  }
+  // Type of request for comic.html data
+  if (params.type === 'single') {
+    if (!params.title) {
+      return respondMeta(request, response, 400);
+    }
+    // If the comic wasn't found
+    if (!comics[params.title]) {
+      return respondMeta(request, response, 404);
+    }
+    return respondMeta(request, response, 200);
+  }
+  // type of request for comicsList.html
+  if (params.type === 'list') {
+    return respondMeta(request, response, 200);
+  }
+
+  // Type was bad
+  return respondMeta(request, response, 400);
 };
 
 // Function to add a review to a comic. Checks if the parameters are good, and if so
@@ -344,6 +380,7 @@ const addComic = (request, response, comicToAdd) => {
 // Exports
 module.exports = {
   getComicData,
+  getComicMetaData,
   addComic,
   addReview,
 };

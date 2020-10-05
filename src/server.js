@@ -6,7 +6,7 @@ const comicResponses = require('./comicResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-// Remember to add HEAD requests for ALL of these
+// Remember to add HEAD requests for ALL requests that get data
 // Struct for all the different calls and incoming requests
 const urlStruct = {
   GET: {
@@ -24,7 +24,7 @@ const urlStruct = {
     notFound: pageResponses.notFound,
   },
   HEAD: {
-
+    '/getComics': comicResponses.getComicMetaData,
   },
   POST: {
     '/addComic': comicResponses.addComic,
